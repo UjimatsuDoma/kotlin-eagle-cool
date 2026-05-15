@@ -3,6 +3,20 @@
 package prac.tanken.kotlin.eagle
 
 import js.undefined.undefinedOrNull
+import prac.tanken.kotlin.eagle.extra.EagleExtraModule
+import prac.tanken.kotlin.eagle.module.EagleApp
+import prac.tanken.kotlin.eagle.module.EagleClipboard
+import prac.tanken.kotlin.eagle.module.EagleDialog
+import prac.tanken.kotlin.eagle.module.EagleDrag
+import prac.tanken.kotlin.eagle.module.EagleLibrary
+import prac.tanken.kotlin.eagle.module.EagleNotification
+import prac.tanken.kotlin.eagle.module.EagleOs
+import prac.tanken.kotlin.eagle.module.EaglePlugin
+import prac.tanken.kotlin.eagle.module.EaglePreferences
+import prac.tanken.kotlin.eagle.module.EagleScreen
+import prac.tanken.kotlin.eagle.module.EagleShell
+import prac.tanken.kotlin.eagle.module.EagleWindow
+import prac.tanken.kotlin.eagle.module.Log
 import kotlin.js.ExperimentalWasmJsInterop
 import kotlin.js.JsAny
 import kotlin.js.JsName
@@ -21,7 +35,7 @@ external interface Eagle : EagleCallbacks {
     val shell: EagleShell
     val window: EagleWindow
 
-    val extraModule: JsAny
+    val extraModule: EagleExtraModule
     val log: Log
 
     val manifest: JsAny
@@ -48,6 +62,6 @@ fun executeWithEagle(block: Eagle.() -> Unit) {
     }
 
     eagle?.let { block.invoke(it) } ?: run {
-        throw IllegalStateException("Eagle does not exist.")
+        throw IllegalArgumentException("Eagle does not exist.")
     }
 }
